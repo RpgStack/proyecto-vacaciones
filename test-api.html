@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API - Gestión Vacaciones</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { padding: 20px; background-color: #f5f5f5; }
+        .test-container { max-width: 900px; margin: 0 auto; }
+        .test-item { margin: 15px 0; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .status-ok { color: #28a745; }
+        .status-error { color: #dc3545; }
+        .status-pending { color: #ffc107; }
+        button { margin: 5px; }
+        .response { background: #f8f9fa; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 12px; max-height: 200px; overflow-y: auto; }
+        h2 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="test-container">
+    <div class="alert alert-info">
+        <h4>🧪 Panel de Testing - API Gestión Vacaciones</h4>
+        <p>Verifica que los endpoints estén funcionando correctamente</p>
+    </div>
+
+    <!-- CONFIGURACIÓN -->
+    <div class="test-item">
+        <h5>⚙️ Configuración</h5>
+        <div class="mb-3">
+            <label>Base URL (ruta raíz del proyecto):</label>
+            <input type="text" id="baseUrl" class="form-control" value="http://localhost/proyecto-vacaciones" placeholder="http://localhost/proyecto-vacaciones">
+        </div>
+    </div>
+
+    <!-- TEST CONEXIÓN -->
+    <div class="test-item">
+        <h5>1️⃣ Test Conexión BD</h5>
+        <button class="btn btn-primary btn-sm" onclick="testConexion()">Testear Conexión</button>
+        <div id="test-conexion-resultado" class="response" style="display:none; margin-top: 10px;"></div>
+    </div>
+
+    <!-- TEST GUARDAR TRABAJADOR -->
+    <div class="test-item">
+        <h5>2️⃣ Test Alta Trabajador (POST)</h5>
+        <input type="text" id="nombre" class="form-control mb-2" placeholder="Nombre" value="Juan">
+        <input type="text" id="apellido1" class="form-control mb-2" placeholder="Primer Apellido" value="García">
+        <input type="text" id="apellido2" class="form-control mb-2" placeholder="Segundo Apellido (opcional)" value="">
+        <input type="text" id="dni" class="form-control mb-2" placeholder="DNI (ej: 12345678Z)" value="12345678Z">
+        <select id="genero" class="form-control mb-2">
+            <option value="0">Hombre</option>
+            <option value="1">Mujer</option>
+        </select>
+        <input type="email" id="email" class="form-control mb-2" placeholder="Email (opcional)" value="">
+        <input type="date" id="fecha_inicio" class="form-control mb-2" value="2026-05-01">
+        <input type="date" id="fecha_fin" class="form-control mb-2" value="2026-12-31">
+        <button class="btn btn-success btn-sm" onclick="testGuardarTrabajador()">Crear Trabajador</button>
+        <div id="test-guardar-resultado" class="response" style="display:none; margin-top: 10px;"></div>
+    </div>
+
+    <!-- TEST BUSCAR TRABAJADOR -->
+    <div class="test-item">
+        <h5>3️⃣ Test Buscar Trabajador (GET)</h5>
+        <input type="text" id="busqueda" class="form-control mb-2" placeholder="Nombre o DNI" value="Juan">
+        <button class="btn btn-info btn-sm" onclick="testBuscarTrabajador()">Buscar</button>
+        <div id="test-buscar-resultado" class="response" style="display:none; margin-top: 10px;"></div>
+    </div>
+
+    <!-- TEST OBTENER TRABAJADOR -->
+    <div class="test-item">
+        <h5>4️⃣ Test Obtener Trabajador (GET)</h5>
+        <input type="number" id="id_persona" class="form-control mb-2" placeholder="ID Persona" value="1">
+        <button class="btn btn-info btn-sm" onclick="testObtenerTrabajador()">Obtener</button>
+        <div id="test-obtener-resultado" class="response" style="display:none; margin-top: 10px;"></div>
+    </div>
+
+    <!-- TEST TRABAJADORES ACTIVOS -->
+    <div class="test-item">
+        <h5>5️⃣ Test Trabajadores Activos (GET)</h5>
+        <button class="btn btn-secondary btn-sm" onclick="testTrabajadoresActivos()">Obtener Lista</button>
+        <div id="test-activos-resultado" class="response" style="display:none; margin-top: 10px;"></div>
+    </div>
+
+    <!-- TEST DISPONIBILIDAD -->
+    <div class="test-item">
+        <h5>6️⃣ Test Disponibilidad (GET)</h5>
+        <input type="number" id="id_contrato" class="form-control mb-2" placeholder="ID Contrato" value="1">
+        <button class="btn btn-warning btn-sm" onclick="testDisponibilidad()">Calcular</button>
+        <div id="test-disponibilidad-resultado" class="response" style="display:none; margin-top: 10px;"></div>
+    </div>
+
+    <!-- TEST GUARDAR VACACIONES -->
+    <div class="test-item">
+        <h5>7️⃣ Test Guardar Vacaciones (POST) - CRÍTICO</h5>
+        <input type="number" id="id_contrato_vac" class="form-control mb-2" placeholder="ID Contrato" value="1">
+        <input type="date" id="fecha_inicio_vac" class="form-control mb-2" value="2026-05-06">
+        <input type="date" id="fecha_fin_vac" class="form-control mb-2" value="2026-05-10">
+        <select id="tipo_dia" class="form-control mb-2">
+            <option value="vacaciones">Vacaciones</option>
+            <option value="moscosos">Moscosos</option>
+        </select>
+        <input type="text" id="notas" class="form-control mb-2" placeholder="Notas (opcional)" value="">
+        <button class="btn btn-danger btn-sm" onclick="testGuardarVacaciones()">Guardar Vacaciones</button>
+        <div id="test-vacaciones-resultado" class="response" style="display:none; margin-top: 10px;"></div>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="test-item alert alert-light">
+        <h5>📊 Resumen</h5>
+        <div id="resumen">
+            <p class="status-pending">Ejecuta los tests para ver el estado de cada endpoint</p>
+        </div>
+    </div>
+</div>
+
+<script>
+const baseUrl = () => document.getElementById('baseUrl').value;
+let testResults = {};
+
+async function testConexion() {
+    const div = document.getElementById('test-conexion-resultado');
+    div.style.display = 'block';
+    div.innerHTML = '⏳ Testeando...';
+    
+    try {
+        const res = await fetch(baseUrl() + '/config/conexion.php');
+        const text = await res.text();
+        
+        if (text.includes('Conectado')) {
+            div.innerHTML = `<span class="status-ok">✓ Conexión exitosa</span><br>${text}`;
+            testResults['conexion'] = 'ok';
+        } else {
+            div.innerHTML = `<span class="status-error">✗ Error</span><br>${text}`;
+            testResults['conexion'] = 'error';
+        }
+    } catch (error) {
+        div.innerHTML = `<span class="status-error">✗ Error</span><br>${error.message}`;
+        testResults['conexion'] = 'error';
+    }
+    updateResumen();
+}
+
+async function testGuardarTrabajador() {
+    const div = document.getElementById('test-guardar-resultado');
+    div.style.display = 'block';
+    div.innerHTML = '⏳ Enviando...';
+    
+    const formData = new FormData();
+    formData.append('nombre', document.getElementById('nombre').value);
+    formData.append('apellido1', document.getElementById('apellido1').value);
+    formData.append('apellido2', document.getElementById('apellido2').value);
+    formData.append('dni', document.getElementById('dni').value);
+    formData.append('genero', document.getElementById('genero').value);
+    formData.append('email', document.getElementById('email').value);
+    formData.append('fecha_inicio', document.getElementById('fecha_inicio').value);
+    formData.append('fecha_fin', document.getElementById('fecha_fin').value);
+    formData.append('dias_vacaciones', '22');
+    formData.append('dias_moscosos', '6');
+    
+    try {
+        const res = await fetch(baseUrl() + '/logic/trabajadores/guardar_trabajador.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const json = await res.json();
+        
+        if (json.éxito) {
+            div.innerHTML = `<span class="status-ok">✓ Trabajador creado</span><br><pre>${JSON.stringify(json, null, 2)}</pre>`;
+            testResults['guardar'] = 'ok';
+        } else {
+            div.innerHTML = `<span class="status-error">✗ Error</span><br><pre>${JSON.stringify(json, null, 2)}</pre>`;
+            testResults['guardar'] = 'error';
+        }
+    } catch (error) {
+        div.innerHTML = `<span class="status-error">✗ Error</span><br>${error.message}`;
+        testResults['guardar'] = 'error';
+    }
+    updateResumen();
+}
+
+async function testBuscarTrabajador() {
+    const div = document.getElementById('test-buscar-resultado');
+    div.style.display = 'block';
+    div.innerHTML = '⏳ Buscando...';
+    
+    const q = document.getElementById('busqueda').value;
+    
+    try {
+        const res = await fetch(baseUrl() + '/logic/trabajadores/buscar_trabajadores.php?q=' + encodeURIComponent(q));
+        const json = await res.json();
+        
+        if (json.éxito) {
+            div.innerHTML = `<span class="status-ok">✓ ${json.datos.length} resultados encontrados</span><br><pre>${JSON.stringify(json.datos, null, 2)}</pre>`;
+            testResults['buscar'] = 'ok';
+        } else {
+            div.innerHTML = `<span class="status-error">✗ Error</span><br><pre>${JSON.stringify(json, null, 2)}</pre>`;
+            testResults['buscar'] = 'error';
+        }
+    } catch (error) {
+        div.innerHTML = `<span class="status-error">✗ Error</span><br>${error.message}`;
+        testResults['buscar'] = 'error';
+    }
+    updateResumen();
+}
+
+async function testObtenerTrabajador() {
+    const div = document.getElementById('test-obtener-resultado');
+    div.style.display = 'block';
+    div.innerHTML = '⏳ Obteniendo...';
+    
+    const id = document.getElementById('id_persona').value;
+    
+    try {
+        const res = await fetch(baseUrl() + '/logic/trabajadores/obtener_trabajador.php?id=' + id);
+        const json = await res.json();
+        
+        if (json.éxito) {
+            div.innerHTML = `<span class="status-ok">✓ Datos obtenidos</span><br><pre>${JSON.stringify(json.datos, null, 2)}</pre>`;
+            testResults['obtener'] = 'ok';
+        } else {
+            div.innerHTML = `<span class="status-error">✗ Error</span><br><pre>${JSON.stringify(json, null, 2)}</pre>`;
+            testResults['obtener'] = 'error';
+        }
+    } catch (error) {
+        div.innerHTML = `<span class="status-error">✗ Error</span><br>${error.message}`;
+        testResults['obtener'] = 'error';
+    }
+    updateResumen();
+}
+
+async function testTrabajadoresActivos() {
+    const div = document.getElementById('test-activos-resultado');
+    div.style.display = 'block';
+    div.innerHTML = '⏳ Obteniendo...';
+    
+    try {
+        const res = await fetch(baseUrl() + '/logic/vacaciones/obtener_trabajadores_activos.php');
+        const json = await res.json();
+        
+        if (json.éxito) {
+            div.innerHTML = `<span class="status-ok">✓ ${json.datos.length} trabajadores activos</span><br><pre>${JSON.stringify(json.datos, null, 2)}</pre>`;
+            testResults['activos'] = 'ok';
+        } else {
+            div.innerHTML = `<span class="status-error">✗ Error</span><br><pre>${JSON.stringify(json, null, 2)}</pre>`;
+            testResults['activos'] = 'error';
+        }
+    } catch (error) {
+        div.innerHTML = `<span class="status-error">✗ Error</span><br>${error.message}`;
+        testResults['activos'] = 'error';
+    }
+    updateResumen();
+}
+
+async function testDisponibilidad() {
+    const div = document.getElementById('test-disponibilidad-resultado');
+    div.style.display = 'block';
+    div.innerHTML = '⏳ Calculando...';
+    
+    const id = document.getElementById('id_contrato').value;
+    
+    try {
+        const res = await fetch(baseUrl() + '/logic/vacaciones/obtener_disponibilidad.php?id_contrato=' + id);
+        const json = await res.json();
+        
+        if (json.éxito) {
+            div.innerHTML = `<span class="status-ok">✓ Disponibilidad calculada</span><br><pre>${JSON.stringify(json.datos, null, 2)}</pre>`;
+            testResults['disponibilidad'] = 'ok';
+        } else {
+            div.innerHTML = `<span class="status-error">✗ Error</span><br><pre>${JSON.stringify(json, null, 2)}</pre>`;
+            testResults['disponibilidad'] = 'error';
+        }
+    } catch (error) {
+        div.innerHTML = `<span class="status-error">✗ Error</span><br>${error.message}`;
+        testResults['disponibilidad'] = 'error';
+    }
+    updateResumen();
+}
+
+async function testGuardarVacaciones() {
+    const div = document.getElementById('test-vacaciones-resultado');
+    div.style.display = 'block';
+    div.innerHTML = '⏳ Guardando...';
+    
+    const formData = new FormData();
+    formData.append('id_contrato', document.getElementById('id_contrato_vac').value);
+    formData.append('fecha_inicio', document.getElementById('fecha_inicio_vac').value);
+    formData.append('fecha_fin', document.getElementById('fecha_fin_vac').value);
+    formData.append('tipo_dia', document.getElementById('tipo_dia').value);
+    formData.append('notas', document.getElementById('notas').value);
+    
+    try {
+        const res = await fetch(baseUrl() + '/logic/vacaciones/guardar_vacaciones.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const json = await res.json();
+        
+        if (json.éxito) {
+            div.innerHTML = `<span class="status-ok">✓ Vacaciones guardadas</span><br><pre>${JSON.stringify(json, null, 2)}</pre>`;
+            testResults['vacaciones'] = 'ok';
+        } else {
+            div.innerHTML = `<span class="status-error">✗ Error</span><br><pre>${JSON.stringify(json, null, 2)}</pre>`;
+            testResults['vacaciones'] = 'error';
+        }
+    } catch (error) {
+        div.innerHTML = `<span class="status-error">✗ Error</span><br>${error.message}`;
+        testResults['vacaciones'] = 'error';
+    }
+    updateResumen();
+}
+
+function updateResumen() {
+    const resumen = document.getElementById('resumen');
+    let html = '<ul>';
+    
+    const tests = {
+        'conexion': 'Conexión BD',
+        'guardar': 'Alta Trabajador',
+        'buscar': 'Buscar Trabajador',
+        'obtener': 'Obtener Trabajador',
+        'activos': 'Trabajadores Activos',
+        'disponibilidad': 'Disponibilidad',
+        'vacaciones': 'Guardar Vacaciones'
+    };
+    
+    for (const [key, label] of Object.entries(tests)) {
+        const status = testResults[key];
+        const icon = status === 'ok' ? '✓' : status === 'error' ? '✗' : '○';
+        const classe = status === 'ok' ? 'status-ok' : status === 'error' ? 'status-error' : 'status-pending';
+        html += `<li><span class="${classe}">${icon} ${label}</span></li>`;
+    }
+    
+    html += '</ul>';
+    resumen.innerHTML = html;
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

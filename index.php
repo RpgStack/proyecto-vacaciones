@@ -34,7 +34,7 @@
                     <th>Nombre Completo</th>
                     <th>Email</th>
                     <th>Vacaciones (Restantes)</th>
-                    <th>Moscosos (Restantes)</th>
+                    <th>Días Libres (Restantes)</th>
                     <th>Acciones</th>
                 </tr>
             </thead>

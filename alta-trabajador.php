@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-body">
 <!-- AQUÍ! He creado la carpeta logic y el nombre de la carpeta guardar-trabajador es ejemplo y solo quería dejar el método post -->
-                    <form action="logic/guardar_trabajador.php" method="POST">
+                    <form action="logic/trabajadores/guardar_trabajador.php" method="POST">
                         
                         <h5 class="text-muted border-bottom pb-2">Datos Personales</h5>
                         <div class="row g-3 mb-4">
@@ -68,7 +68,7 @@
                             </div>
                         </div>
 
-                        <h5 class="text-muted border-bottom pb-2">Configuración de Vacaciones</h5>
+                        <h5 class="text-muted border-bottom pb-2">Configuración de Licencias</h5>
                         <div class="row g-3 mb-4">
                             <div class="col-md-3">
                                 <label class="form-label">Inicio Contrato</label>
@@ -82,6 +82,10 @@
                             <div class="col-md-3">
                                 <label class="form-label">Días Vacaciones</label>
                                 <input type="number" name="dias_vacaciones" class="form-control" value="22" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Días Libres</label>
+                                <input type="number" name="dias_moscosos" class="form-control" value="6" required>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Días Moscosos</label>

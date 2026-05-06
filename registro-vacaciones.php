@@ -27,7 +27,7 @@
                                 </div>
                                 <div>
                                     <p class="h4 mb-0 text-warning">4</p>
-                                    <small class="text-muted">Moscosos</small>
+                                    <small class="text-muted">Días libres</small>
                                 </div>
                             </div>
                         </aside>
@@ -43,7 +43,7 @@
                 <div class="card-body">
 
 <!-- AQUÍ! He creado la carpeta logic pero no hay nada dentro. Puedes poner el nombre que quieras a la carpeta y a los ficheros  -->
-                    <form action="logic/guardar_vacaciones.php" method="POST">
+                    <form action="logic/vacaciones/guardar_vacaciones.php" method="POST">
 <!-- AQUÍ! el value lo he puesto para el ejemplo   -->
                         <input type="hidden" name="id_trabajador" value="1">
 
@@ -53,10 +53,10 @@
 <!-- AQUÍ!    -->
                                 <select id="tipo_dia" name="tipo_dia" class="form-select" required>
                                     <option value="vacaciones">Vacaciones</option>
-                                    <option value="moscoso">Moscoso</option>
+                                    <option value="dias_libres">Días de libre disposición</option>
                                 </select>
                                 <div class="form-text text-danger">
-                                    <small>* Los moscosos no pueden unirse a vacaciones.</small>
+                                    <small>* Los días de libre disposición no pueden unirse a vacaciones.</small>
                                 </div>
                             </div>
 

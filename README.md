@@ -156,24 +156,24 @@ http://localhost/proyecto-vacaciones/config/conexion.php
 
 ## 🛠️ Desarrollo Paso a Paso
 
-### Día 1 (4 mayo) - Setup
+### Setup
 - [x] Crear carpeta `config/` + `logic/`
 - [x] Crear `conexion.php` + `Validador.php` + `respuestas.php`
 - [ ] **Coordinar con David:** Credenciales BD
 
-### Día 2-3 (5-6 mayo) - Módulo Trabajadores
+### Módulo Trabajadores
 - [x] `guardar_trabajador.php` - Alta
 - [x] `buscar_trabajadores.php` - Búsqueda
 - [x] `obtener_trabajador.php` - Detalles
 - [ ] **Testear manualmente**
 
-### Día 3-4 (6-7 mayo) - Módulo Vacaciones
+### Módulo Vacaciones
 - [x] `obtener_trabajadores_activos.php`
 - [x] `obtener_disponibilidad.php`
 - [x] `guardar_vacaciones.php` - MÁS CRÍTICO
 - [ ] **Testear manualmente**
 
-### Día 5 (8 mayo) - CORRECCIÓN ALEJANDRO
+### CORRECCIÓN ALEJANDRO
 - [ ] Crear trabajador → aparece en listado ✓
 - [ ] Buscar trabajador → resultados ✓
 - [ ] Ver disponibilidad → calcula ✓
@@ -181,7 +181,7 @@ http://localhost/proyecto-vacaciones/config/conexion.php
 - [ ] NO permite exceder límites ✓
 - [ ] Errores claros (sin SQL) ✓
 
-### Días 6-27 (9-31 mayo) - REFINAMIENTO
+### REFINAMIENTO
 - [ ] Integración Raquel (fetch() en formularios)
 - [ ] David crea Stored Procedures
 - [ ] Fran reemplaza queries por CALL SPs

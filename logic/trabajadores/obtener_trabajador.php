@@ -67,7 +67,7 @@ try {
             p.surname as apellido1,
             p.dni as dni,
             p.woman as genero
-        FROM PER.PERSONS p
+        FROM PERSONS p
         WHERE p.idPerson = ?
     ";
     
@@ -89,7 +89,7 @@ try {
     
     $sql_apellido2 = "
         SELECT surname as apellido2 
-        FROM PER.SECONDSURNAMES 
+        FROM SECONDSURNAMES 
         WHERE idPerson = ? 
         LIMIT 1
     ";
@@ -109,7 +109,7 @@ try {
     
     $sql_telefono = "
         SELECT phone as telefono 
-        FROM PER.PHONES 
+        FROM PHONES 
         WHERE idPerson = ? 
         LIMIT 1
     ";
@@ -129,7 +129,7 @@ try {
     
     $sql_email = "
         SELECT email 
-        FROM PER.EMAILS 
+        FROM EMAILS 
         WHERE idPerson = ? 
         LIMIT 1
     ";
@@ -153,7 +153,7 @@ try {
             zipCode as codigo_postal,
             town as municipio,
             province as provincia
-        FROM PER.ADDRESSES 
+        FROM ADDRESSES 
         WHERE idPerson = ? 
         LIMIT 1
     ";
@@ -181,7 +181,7 @@ try {
             to as fecha_fin,
             holidays as dias_vacaciones,
             ap as dias_moscosos
-        FROM CON.CONTRACTS 
+        FROM CONTRACTS 
         WHERE idPerson = ? AND to >= CURDATE()
         LIMIT 1
     ";

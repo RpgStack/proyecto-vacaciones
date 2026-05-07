@@ -174,7 +174,7 @@ generar_rango_fechas($inicio, $fin)    // Array de fechas hábiles
 | Métodos validación         | 9+                    |
 | Stored Procedures para David | 23                    |
 | Documentos creados           | 4                     |
-| Tablas BD usadas             | 8 (PER.* + CON.*)     |
+| Tablas BD usadas             | 8                     |
 | Transacciones                | 2 (alta + vacaciones) |
 
 ---

@@ -33,7 +33,7 @@ $sql_persona = "
         p.surname as apellido1,
         p.dni as dni,
         p.woman as genero
-    FROM PER.PERSONS p
+    FROM PERSONS p
     WHERE p.idPerson = ?
 ";
 
@@ -55,7 +55,7 @@ BEGIN
         p.surname as apellido1,
         p.dni as dni,
         p.woman as genero
-    FROM PER.PERSONS p
+    FROM PERSONS p
     WHERE p.idPerson = p_id_persona;
 END;
 ```
@@ -81,7 +81,7 @@ $persona = $stmt->fetch(PDO::FETCH_ASSOC);
 - **Retorna:** `COUNT(*) as cantidad`
 - **Query:**
   ```sql
-  SELECT COUNT(*) as cantidad FROM PER.PERSONS WHERE dni = p_dni;
+  SELECT COUNT(*) as cantidad FROM PERSONS WHERE dni = p_dni;
   ```
 
 #### 2. **sp_crear_persona**
@@ -91,7 +91,7 @@ $persona = $stmt->fetch(PDO::FETCH_ASSOC);
 - **Retorna:** `LAST_INSERT_ID()` (id persona creada)
 - **Query:**
   ```sql
-  INSERT INTO PER.PERSONS (perName, surname, dni, woman) 
+  INSERT INTO PERSONS (perName, surname, dni, woman) 
   VALUES (p_nombre, p_apellido1, p_dni, p_genero);
   SELECT LAST_INSERT_ID() as id_persona;
   ```
@@ -103,7 +103,7 @@ $persona = $stmt->fetch(PDO::FETCH_ASSOC);
 - **Retorna:** void
 - **Query:**
   ```sql
-  INSERT INTO PER.SECONDSURNAMES (idPerson, surname) VALUES (p_id_persona, p_apellido2);
+  INSERT INTO SECONDSURNAMES (idPerson, surname) VALUES (p_id_persona, p_apellido2);
   ```
 
 #### 4. **sp_crear_telefono**
@@ -113,7 +113,7 @@ $persona = $stmt->fetch(PDO::FETCH_ASSOC);
 - **Retorna:** void
 - **Query:**
   ```sql
-  INSERT INTO PER.PHONES (idPerson, phone) VALUES (p_id_persona, p_telefono);
+  INSERT INTO PHONES (idPerson, phone) VALUES (p_id_persona, p_telefono);
   ```
 
 #### 5. **sp_crear_email**
@@ -123,7 +123,7 @@ $persona = $stmt->fetch(PDO::FETCH_ASSOC);
 - **Retorna:** void
 - **Query:**
   ```sql
-  INSERT INTO PER.EMAILS (idPerson, email) VALUES (p_id_persona, p_email);
+  INSERT INTO EMAILS (idPerson, email) VALUES (p_id_persona, p_email);
   ```
 
 #### 6. **sp_crear_direccion**
@@ -133,7 +133,7 @@ $persona = $stmt->fetch(PDO::FETCH_ASSOC);
 - **Retorna:** void
 - **Query:**
   ```sql
-  INSERT INTO PER.ADDRESSES (idPerson, address, zipCode, town, province) 
+  INSERT INTO ADDRESSES (idPerson, address, zipCode, town, province) 
   VALUES (p_id_persona, p_direccion, p_codigo_postal, p_municipio, p_provincia);
   ```
 
@@ -144,7 +144,7 @@ $persona = $stmt->fetch(PDO::FETCH_ASSOC);
 - **Retorna:** `LAST_INSERT_ID()` (id contrato creado)
 - **Query:**
   ```sql
-  INSERT INTO CON.CONTRACTS (idPerson, from, to, holidays, ap) 
+  INSERT INTO CONTRACTS (idPerson, from, to, holidays, ap) 
   VALUES (p_id_persona, p_fecha_inicio, p_fecha_fin, p_dias_vacaciones, p_dias_moscosos);
   SELECT LAST_INSERT_ID() as id_contrato;
   ```
@@ -251,7 +251,7 @@ $persona = $stmt->fetch(PDO::FETCH_ASSOC);
 - **Retorna:** void
 - **Query:**
   ```sql
-  INSERT INTO CON.WORKERHOLIDAYS (idContract, idHolidayType, holiday, notes)
+  INSERT INTO WORKERHOLIDAYS (idContract, idHolidayType, holiday, notes)
   VALUES (p_id_contrato, p_id_tipo_dia, p_fecha, p_notas);
   ```
 

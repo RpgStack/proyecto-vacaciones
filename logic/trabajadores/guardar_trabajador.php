@@ -9,10 +9,10 @@
  * Recibe datos del formulario de Raquel (alta-trabajador.php)
  * 
  * Inserta en 4 tablas:
- *   1. PER.PERSONS (datos base)
- *   2. PER.SECONDSURNAMES (apellido 2, si existe)
- *   3. PER.ADDRESSES (dirección completa)
- *   4. CON.CONTRACTS (contrato laboral)
+ *   1. PERSONS (datos base)
+ *   2. SECONDSURNAMES (apellido 2, si existe)
+ *   3. ADDRESSES (dirección completa)
+ *   4. CONTRACTS (contrato laboral)
  * 
  * Todo en UNA TRANSACCIÓN (si algo falla, rollback de todo)
  * ============================================================
@@ -111,7 +111,7 @@ try {
     // Parámetros SP: $dni (VARCHAR)
     // Retorna: número de registros (debe ser 0)
     
-    $sql_verificar = "SELECT COUNT(*) as cantidad FROM PER.PERSONS WHERE dni = ?";
+    $sql_verificar = "SELECT COUNT(*) as cantidad FROM PERSONS WHERE dni = ?";
     $stmt_verificar = $conexion->prepare($sql_verificar);
     $stmt_verificar->execute([$dni]);
     $resultado = $stmt_verificar->fetch(PDO::FETCH_ASSOC);
@@ -133,14 +133,14 @@ try {
     $conexion->beginTransaction();
     
     // ====================================================
-    // 6.1 INSERTAR EN PER.PERSONS
+    // 6.1 INSERTAR EN PERSONS
     // ====================================================
     
     // CONSULTA A CONVERTIR A SP: sp_crear_persona
     // Parámetros SP: $nombre (VARCHAR), $apellido1 (VARCHAR), $dni (VARCHAR), $genero (BOOLEAN)
     // Retorna: id de la persona creada
     
-    $sql_persona = "INSERT INTO PER.PERSONS (perName, surname, dni, woman) VALUES (?, ?, ?, ?)";
+    $sql_persona = "INSERT INTO PERSONS (perName, surname, dni, woman) VALUES (?, ?, ?, ?)";
     $stmt_persona = $conexion->prepare($sql_persona);
     $stmt_persona->execute([
         $nombre,
@@ -161,7 +161,7 @@ try {
         // Parámetros SP: $id_persona (INT), $apellido2 (VARCHAR)
         // Retorna: void
         
-        $sql_apellido2 = "INSERT INTO PER.SECONDSURNAMES (idPerson, surname) VALUES (?, ?)";
+        $sql_apellido2 = "INSERT INTO SECONDSURNAMES (idPerson, surname) VALUES (?, ?)";
         $stmt_apellido2 = $conexion->prepare($sql_apellido2);
         $stmt_apellido2->execute([$id_persona, $apellido2]);
     }
@@ -175,7 +175,7 @@ try {
         // Parámetros SP: $id_persona (INT), $telefono (VARCHAR)
         // Retorna: void
         
-        $sql_telefono = "INSERT INTO PER.PHONES (idPerson, phone) VALUES (?, ?)";
+        $sql_telefono = "INSERT INTO PHONES (idPerson, phone) VALUES (?, ?)";
         $stmt_telefono = $conexion->prepare($sql_telefono);
         $stmt_telefono->execute([$id_persona, $telefono]);
     }
@@ -189,7 +189,7 @@ try {
         // Parámetros SP: $id_persona (INT), $email (VARCHAR)
         // Retorna: void
         
-        $sql_email = "INSERT INTO PER.EMAILS (idPerson, email) VALUES (?, ?)";
+        $sql_email = "INSERT INTO EMAILS (idPerson, email) VALUES (?, ?)";
         $stmt_email = $conexion->prepare($sql_email);
         $stmt_email->execute([$id_persona, $email]);
     }
@@ -204,7 +204,7 @@ try {
         //               $municipio (VARCHAR), $provincia (VARCHAR)
         // Retorna: void
         
-        $sql_direccion = "INSERT INTO PER.ADDRESSES (idPerson, address, zipCode, town, province) VALUES (?, ?, ?, ?, ?)";
+        $sql_direccion = "INSERT INTO ADDRESSES (idPerson, address, zipCode, town, province) VALUES (?, ?, ?, ?, ?)";
         $stmt_direccion = $conexion->prepare($sql_direccion);
         $stmt_direccion->execute([$id_persona, $direccion, $codigo_postal, $municipio, $provincia]);
     }
@@ -218,7 +218,7 @@ try {
     //               $dias_vacaciones (INT), $dias_moscosos (INT)
     // Retorna: id del contrato creado
     
-    $sql_contrato = "INSERT INTO CON.CONTRACTS (idPerson, from, to, holidays, ap) VALUES (?, ?, ?, ?, ?)";
+    $sql_contrato = "INSERT INTO CONTRACTS (idPerson, from, to, holidays, ap) VALUES (?, ?, ?, ?, ?)";
     $stmt_contrato = $conexion->prepare($sql_contrato);
     $stmt_contrato->execute([$id_persona, $fecha_inicio, $fecha_fin, $dias_vacaciones, $dias_moscosos]);
     

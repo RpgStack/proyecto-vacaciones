@@ -116,7 +116,7 @@ try {
             c.to as fecha_fin_contrato,
             c.holidays as dias_vacaciones_total,
             c.ap as dias_moscosos_total
-        FROM CON.CONTRACTS c
+        FROM CONTRACTS c
         WHERE c.idContract = ? AND c.to >= CURDATE()
     ";
     
@@ -160,8 +160,8 @@ try {
     
     $sql_cogidos = "
         SELECT COUNT(*) as dias_cogidos
-        FROM CON.WORKERHOLIDAYS wh
-        INNER JOIN CON.HOLIDAYTYPES ht ON wh.idHolidayType = ht.idHolidayType
+        FROM WORKERHOLIDAYS wh
+        INNER JOIN HOLIDAYTYPES ht ON wh.idHolidayType = ht.idHolidayType
         WHERE wh.idContract = ? AND ht.holidayType = ?
     ";
     
@@ -194,8 +194,8 @@ try {
         
         $sql_moscosos_unidos = "
             SELECT COUNT(*) as conflictos
-            FROM CON.WORKERHOLIDAYS wh
-            INNER JOIN CON.HOLIDAYTYPES ht ON wh.idHolidayType = ht.idHolidayType
+            FROM WORKERHOLIDAYS wh
+            INNER JOIN HOLIDAYTYPES ht ON wh.idHolidayType = ht.idHolidayType
             WHERE wh.idContract = ? 
             AND ht.holidayType = 'moscosos'
             AND (
@@ -229,7 +229,7 @@ try {
     
     $sql_solapamientos = "
         SELECT COUNT(*) as solapamientos
-        FROM CON.WORKERHOLIDAYS wh
+        FROM WORKERHOLIDAYS wh
         WHERE wh.idContract = ? 
         AND wh.holiday BETWEEN ? AND ?
     ";
@@ -252,7 +252,7 @@ try {
     
     $sql_tipo = "
         SELECT idHolidayType as id_tipo
-        FROM CON.HOLIDAYTYPES
+        FROM HOLIDAYTYPES
         WHERE holidayType = ?
     ";
     
@@ -282,7 +282,7 @@ try {
             // Retorna: id del registro creado
             
             $sql_insertar = "
-                INSERT INTO CON.WORKERHOLIDAYS (idContract, idHolidayType, holiday, notes)
+                INSERT INTO WORKERHOLIDAYS (idContract, idHolidayType, holiday, notes)
                 VALUES (?, ?, ?, ?)
             ";
             

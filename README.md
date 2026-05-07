@@ -39,7 +39,7 @@ proyecto-vacaciones/
 ### 1. Coordinar con David
 
 - [ ] Obtener credenciales BD (host, user, password)
-- [ ] Confirmar nombres exactos tablas (PER.PERSONS, CON.CONTRACTS, etc)
+- [ ] Confirmar nombres exactos tablas (PERSONS, CONTRACTS, etc)
 - [ ] Si no existe BD, ejecutar script SQL de David
 
 ### 2. Actualizar conexión
@@ -126,7 +126,7 @@ http://localhost/proyecto-vacaciones/config/conexion.php
 2. Fran:   Valida DNI, email, fechas
 3. Fran:   Verifica DNI NO duplicado en BD
 4. Fran:   BEGIN TRANSACTION
-5. Fran:   INSERT PER.PERSONS + SECONDSURNAMES + ADDRESSES + CONTRACTS
+5. Fran:   INSERT PERSONS + SECONDSURNAMES + ADDRESSES + CONTRACTS
 6. Fran:   COMMIT o ROLLBACK
 7. Raquel: Recibe JSON con éxito/error
 8. Raquel: Muestra mensaje + recarga lista
@@ -156,7 +156,7 @@ http://localhost/proyecto-vacaciones/config/conexion.php
             - ¿Moscosos NO unidos?
             - ¿NO excede límite?
             - ¿NO se superpone?
-8. Fran:   INSERT cada día en CON.WORKERHOLIDAYS
+8. Fran:   INSERT cada día en WORKERHOLIDAYS
 9. Raquel: Recibe confirmación
 10. Raquel: Refresh tabla
 ```

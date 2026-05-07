@@ -8,7 +8,7 @@
  * 
  * Calcula cuántos días tiene disponible un trabajador:
  *   - Días totales (del contrato)
- *   - Días ya cogidos (de CON.WORKERHOLIDAYS)
+ *   - Días ya cogidos (de WORKERHOLIDAYS)
  *   - Festivos en el período vigente
  * 
  * Disponibles = Totales - Ya_cogidos - Festivos
@@ -65,7 +65,7 @@ try {
             c.to as fecha_fin,
             c.holidays as dias_vacaciones_total,
             c.ap as dias_moscosos_total
-        FROM CON.CONTRACTS c
+        FROM CONTRACTS c
         WHERE c.idContract = ?
     ";
     
@@ -87,8 +87,8 @@ try {
     
     $sql_dias_cogidos = "
         SELECT COUNT(*) as dias_cogidos
-        FROM CON.WORKERHOLIDAYS wh
-        INNER JOIN CON.HOLIDAYTYPES ht ON wh.idHolidayType = ht.idHolidayType
+        FROM WORKERHOLIDAYS wh
+        INNER JOIN HOLIDAYTYPES ht ON wh.idHolidayType = ht.idHolidayType
         WHERE wh.idContract = ? AND ht.holidayType = 'vacaciones'
     ";
     
@@ -107,8 +107,8 @@ try {
     
     $sql_moscosos_cogidos = "
         SELECT COUNT(*) as moscosos_cogidos
-        FROM CON.WORKERHOLIDAYS wh
-        INNER JOIN CON.HOLIDAYTYPES ht ON wh.idHolidayType = ht.idHolidayType
+        FROM WORKERHOLIDAYS wh
+        INNER JOIN HOLIDAYTYPES ht ON wh.idHolidayType = ht.idHolidayType
         WHERE wh.idContract = ? AND ht.holidayType = 'moscosos'
     ";
     
@@ -127,7 +127,7 @@ try {
     
     $sql_festivos = "
         SELECT bankHoliday as festivo
-        FROM CON.BANKHOLIDAYS
+        FROM BANKHOLIDAYS
         WHERE bankHoliday >= ? AND bankHoliday <= ?
         ORDER BY bankHoliday ASC
     ";

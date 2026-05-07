@@ -70,9 +70,9 @@ try {
             c.from as fecha_inicio,
             c.to as fecha_fin,
             c.holidays as dias_vacaciones
-        FROM PER.PERSONS p
-        LEFT JOIN PER.SECONDSURNAMES ps ON p.idPerson = ps.idPerson
-        LEFT JOIN CON.CONTRACTS c ON p.idPerson = c.idPerson AND c.to >= CURDATE()
+        FROM PERSONS p
+        LEFT JOIN SECONDSURNAMES ps ON p.idPerson = ps.idPerson
+        LEFT JOIN CONTRACTS c ON p.idPerson = c.idPerson AND c.to >= CURDATE()
         WHERE 
             p.perName LIKE ? 
             OR p.dni LIKE ?

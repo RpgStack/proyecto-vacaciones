@@ -56,7 +56,7 @@ try {
  * 
  * 1. Script SQL crear tablas:
  *    - Si no existen, enviar script CREATE TABLE para cada tabla
- *    - Verificar nombres exactos: PER.PERSONS, CON.CONTRACTS, etc
+ *    - Verificar nombres exactos: PERSONS, CONTRACTS, etc
  * 
  * 2. Usuarios/Permisos:
  *    - El usuario debe tener SELECT, INSERT, UPDATE, DELETE

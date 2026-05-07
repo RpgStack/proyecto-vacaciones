@@ -48,9 +48,9 @@ try {
             c.to as fecha_fin,
             c.holidays as dias_vacaciones,
             c.ap as dias_moscosos
-        FROM PER.PERSONS p
-        INNER JOIN CON.CONTRACTS c ON p.idPerson = c.idPerson
-        LEFT JOIN PER.SECONDSURNAMES ps ON p.idPerson = ps.idPerson
+        FROM PERSONS p
+        INNER JOIN CONTRACTS c ON p.idPerson = c.idPerson
+        LEFT JOIN SECONDSURNAMES ps ON p.idPerson = ps.idPerson
         WHERE c.to >= CURDATE()
         ORDER BY p.perName ASC
     ";

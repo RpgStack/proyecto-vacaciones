@@ -43,7 +43,12 @@ CREATE TABLE addresses (
     zipCode   VARCHAR(5) NOT NULL,
     town      VARCHAR(100) NOT NULL,
     province  VARCHAR(50) NOT NULL,
-    FOREIGN KEY (idPerson) REFERENCES persons(idPerson) ON DELETE CASCADE
+    FOREIGN KEY (idPerson) REFERENCES persons(idPerson) ON DELETE CASCADE,
+    -- Validación de Código Postal (Exactamente 5 números en España)
+    CONSTRAINT chk_zipCode_format CHECK (zipCode REGEXP '^[0-9]{5}$'),
+    -- Validación de Provincia/Municipio (Evitar caracteres extraños, permitiendo tildes y ñ)
+    CONSTRAINT chk_town_chars CHECK (town REGEXP '^[[:alpha:][:space:]áéíóúÁÉÍÓÚñÑüÜ''-]+$'),
+    CONSTRAINT chk_province_chars CHECK (province REGEXP '^[[:alpha:][:space:]áéíóúÁÉÍÓÚñÑüÜ''-]+$')
 ) ENGINE=InnoDB;
 
 CREATE TABLE phones (

@@ -375,6 +375,4 @@ try {
 
 ---
 
-**Autor:** Fran
 **Equipo:** Raquel + David + Fran
-**Última actualización:** 4 mayo 2026
